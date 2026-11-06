@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root { --ink: #1c2b2a; --muted: #78827d; --paper: #fbfcf8; --line: #e4e9e1; --green: #245c4b; --green-deep: #173c34; --lime: #d7ed9f; --coral: #e4755e; }
+@theme inline { --color-background: var(--paper); --color-foreground: var(--ink); --font-sans: var(--font-geist-sans); --font-mono: var(--font-geist-mono); }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.app-frame { min-height: 100vh; }
+.side-nav { position: fixed; inset: 0 auto 0 0; z-index: 3; display: flex; width: 238px; flex-direction: column; border-right: 1px solid var(--line); background: #f5f8f2; padding: 28px 18px 22px; }
+.brand { display: flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 750; letter-spacing: 0; }
+.brand-mark { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 9px; background: var(--green); color: white; }
+.nav-caption, .eyebrow, .breadcrumb, .collection-count { font-size: 10px; font-weight: 750; letter-spacing: 0; }
+.nav-caption { margin: 49px 0 12px 10px; color: #929b93; }
+.nav-links { display: grid; gap: 5px; }
+.nav-link { display: flex; min-height: 43px; align-items: center; gap: 12px; padding: 0 11px; border-radius: 5px; color: #66716b; font-weight: 600; }
+.nav-link:hover, .nav-link.active { background: #e6efe4; color: var(--green-deep); }
+.nav-footnote { display: flex; align-items: center; gap: 9px; margin-top: auto; padding: 14px 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+.live-dot { display: inline-block; width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #57a47b; }
+.main-panel { min-height: 100vh; margin-left: 238px; }
+.page-header { display: flex; min-height: 97px; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding: 20px clamp(24px, 5vw, 72px); }
+.breadcrumb { margin: 0 0 7px; color: #8d9690; }.breadcrumb span { padding: 0 6px; color: #c2c9c0; }
+.page-header h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 27px; font-weight: 500; }
+.header-note { display: flex; align-items: center; gap: 8px; color: #63716a; font-size: 12px; }
+.page-content { max-width: 1160px; margin: 0 auto; padding: 28px clamp(24px, 5vw, 72px) 72px; }
+.intro-band { position: relative; display: flex; min-height: 230px; overflow: hidden; align-items: center; justify-content: space-between; border-radius: 6px; background: #e8f0df; padding: 30px 42px; }
+.intro-copy { position: relative; z-index: 1; }.eyebrow { color: #697a68; }
+.intro-copy h2 { margin: 10px 0 9px; color: var(--green-deep); font-family: Georgia, "Times New Roman", serif; font-size: 34px; font-weight: 500; line-height: 1.06; }
+.intro-copy p { margin: 0; color: #63726a; font-size: 13px; }
+.intro-art { position: relative; width: 270px; height: 184px; flex: 0 0 auto; }.art-sun { position: absolute; top: 5px; right: 12px; width: 145px; height: 145px; border-radius: 50%; background: var(--lime); }
+.art-book { position: absolute; z-index: 1; bottom: 17px; display: flex; width: 73px; height: 118px; align-items: flex-end; padding: 0 8px 11px; box-shadow: 4px 5px 0 #b5c6a9; color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: 12px; line-height: 1.05; }
+.art-book-one { left: 28px; transform: rotate(-9deg); background: #d96f58; }.art-book-two { left: 99px; height: 139px; background: #275b4b; }.art-book-three { left: 172px; transform: rotate(8deg); background: #e5ba54; color: #35493c; }
+.art-caption { position: absolute; z-index: 2; top: 19px; right: 5px; color: #527254; font-size: 9px; font-weight: 750; line-height: 1.4; }
+.stat-strip { display: flex; gap: 0; margin: 23px 0 34px; border-bottom: 1px solid var(--line); }
+.stat-item { display: grid; min-width: 145px; gap: 4px; padding: 4px 27px 17px 0; }.stat-item + .stat-item { border-left: 1px solid var(--line); padding-left: 27px; }
+.stat-number { font-family: Georgia, "Times New Roman", serif; font-size: 26px; line-height: 1; }.stat-label { color: var(--muted); font-size: 11px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 12px; }.section-heading h2 { margin: 6px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: 23px; font-weight: 500; }.collection-count { padding-bottom: 4px; color: #8b948d; }
+.book-list { border-top: 1px solid var(--line); }.book-row { display: grid; min-height: 91px; grid-template-columns: 48px minmax(0, 1fr) minmax(170px, 230px) 28px; align-items: center; gap: 17px; border-bottom: 1px solid var(--line); padding: 12px 5px; }
+.book-cover { position: relative; display: grid; width: 45px; height: 62px; place-items: center; overflow: hidden; border-radius: 2px 4px 4px 2px; color: #fff; box-shadow: inset 4px 0 0 #00000018; }.book-cover span { font-family: Georgia, "Times New Roman", serif; font-size: 23px; }.book-cover i { position: absolute; right: 7px; bottom: 8px; left: 7px; height: 2px; background: #ffffff9e; }
+.cover-0 { background: #b8614b; }.cover-1 { background: #376e5b; }.cover-2 { background: #657f98; }.cover-3 { background: #c29237; }.cover-4 { background: #795b76; }
+.book-details { min-width: 0; }.book-details h2 { overflow: hidden; margin: 0 0 5px; font-size: 14px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }.book-details p, .book-status p { margin: 0; color: var(--muted); font-size: 11px; }.book-year { color: #99a19a; }
+.book-status { justify-self: start; }.status-pill { display: inline-flex; min-height: 23px; align-items: center; gap: 5px; margin-bottom: 4px; border-radius: 3px; padding: 2px 7px; font-size: 10px; font-weight: 650; }.available { background: #e7f2e8; color: #2f704a; }.on-loan { background: #f9eee7; color: #a55b3d; }.book-number { color: #a7afa8; font-size: 10px; text-align: right; }
+.empty-state, .loading-list { display: grid; min-height: 150px; place-content: center; justify-items: center; gap: 10px; color: var(--muted); }.empty-state p { margin: 0; }
+@media (max-width: 760px) {
+  .side-nav { position: sticky; inset: 0 0 auto; width: auto; height: 62px; flex-direction: row; align-items: center; justify-content: space-between; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 18px; }
+  .brand { gap: 8px; font-size: 17px; }.brand-mark { width: 31px; height: 31px; }.nav-caption, .nav-footnote { display: none; }.nav-links { display: flex; gap: 3px; }.nav-link { min-height: 38px; gap: 7px; padding: 0 9px; font-size: 12px; }
+  .main-panel { margin-left: 0; }.page-header { min-height: 76px; padding: 14px 20px; }.page-header h1 { font-size: 24px; }.header-note { font-size: 0; }.page-content { padding: 18px 18px 50px; }
+  .intro-band { min-height: 205px; padding: 24px; }.intro-copy h2 { font-size: 29px; }.intro-copy p { max-width: 210px; font-size: 12px; line-height: 1.5; }.intro-art { position: absolute; right: -47px; bottom: -12px; transform: scale(.72); transform-origin: bottom right; opacity: .9; }
+  .stat-strip { margin: 20px 0 28px; }.stat-item { min-width: 0; flex: 1; padding-right: 12px; }.stat-item + .stat-item { padding-left: 13px; }.stat-number { font-size: 23px; }.stat-label { font-size: 10px; }.section-heading h2 { font-size: 20px; }
+  .book-row { grid-template-columns: 42px minmax(0, 1fr) 24px; gap: 11px; min-height: 82px; }.book-cover { width: 40px; height: 56px; }.book-status { grid-column: 2; grid-row: 2; margin-top: -13px; }.book-number { grid-column: 3; grid-row: 1 / span 2; }.book-details { align-self: end; padding-bottom: 15px; }.book-status p { display: inline; margin-left: 4px; font-size: 10px; }.status-pill { min-height: 19px; margin-bottom: 0; padding: 1px 5px; font-size: 9px; }
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: no-preference) {
+  .intro-band { animation: arrive 420ms ease-out both; }.book-row { animation: arrive 360ms ease-out both; }.book-row:nth-child(2) { animation-delay: 35ms; }.book-row:nth-child(3) { animation-delay: 70ms; }
+  @keyframes arrive { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
 }
