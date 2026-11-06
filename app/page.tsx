@@ -3,6 +3,7 @@ import { BookOpen, CircleCheck, Clock3 } from "lucide-react";
 import { getBooks, type BookRecord } from "@/db";
 import { SideNav } from "./components/side-nav";
 import { AddBookForm } from "./components/add-book-form";
+import { BookControls } from "./components/book-controls";
 
 function BookRows({ books }: { books: BookRecord[] }) {
   if (books.length === 0) {
@@ -25,7 +26,7 @@ function BookRows({ books }: { books: BookRecord[] }) {
               <><span className="status-pill available"><CircleCheck size={13} /> Available</span><p>On the shelf</p></>
             )}
           </div>
-          <div className="book-number">{String(index + 1).padStart(2, "0")}</div>
+          <div className="book-row-end"><div className="book-number">{String(index + 1).padStart(2, "0")}</div><BookControls book={book} /></div>
         </article>
       ))}
     </div>
