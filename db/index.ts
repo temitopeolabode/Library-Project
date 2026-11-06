@@ -56,3 +56,21 @@ export async function getMembers() {
     order by name asc
   `;
 }
+
+export async function getLoanOptions() {
+  const [books, members] = await Promise.all([
+    sql<{ id: number; title: string; author: string }[]>`
+      select books.id, books.title, authors.name as author
+      from books
+      join authors on authors.id = books.author_id
+      where not exists (
+        select 1 from loans where loans.book_id = books.id and loans.returned_on is null
+      )
+      order by books.title asc
+    `,
+    sql<{ id: number; name: string }[]>`
+      select id, name from members order by name asc
+    `,
+  ]);
+  return { books, members };
+}

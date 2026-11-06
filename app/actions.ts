@@ -105,3 +105,54 @@ export async function addMember(_previousState: { error?: string; success?: stri
   revalidatePath("/members");
   return { success: `${name} was added as a member.` };
 }
+
+export async function lendBook(_previousState: { error?: string; success?: string }, formData: FormData) {
+  const bookId = Number(readText(formData, "book_id"));
+  const memberId = Number(readText(formData, "member_id"));
+  if (!Number.isInteger(bookId) || bookId < 1) return { error: "Choose an available book." };
+  if (!Number.isInteger(memberId) || memberId < 1) return { error: "Choose a member." };
+
+  try {
+    const [book] = await sql.begin(async (transaction) => {
+      const [availableBook] = await transaction<{ title: string }[]>`
+        select title from books where id = ${bookId} for update
+      `;
+      if (!availableBook) throw new Error("This book is not available.");
+
+      const [activeLoan] = await transaction<{ id: number }[]>`
+        select id from loans where book_id = ${bookId} and returned_on is null
+      `;
+      if (activeLoan) throw new Error("This book is already on loan.");
+
+      const [member] = await transaction<{ id: number }[]>`
+        select id from members where id = ${memberId}
+      `;
+      if (!member) throw new Error("Choose a valid member.");
+
+      await transaction`
+        insert into loans (book_id, member_id, borrowed_on, due_on)
+        values (${bookId}, ${memberId}, current_date, current_date + 14)
+      `;
+      return [availableBook];
+    });
+    revalidatePath("/");
+    return { success: `“${book.title}” is now on loan.` };
+  } catch (error) {
+    return { error: error instanceof Error ? error.message : "Unable to lend this book." };
+  }
+}
+
+export async function returnBook(_previousState: { error?: string; success?: string }, formData: FormData) {
+  const bookId = Number(readText(formData, "book_id"));
+  if (!Number.isInteger(bookId) || bookId < 1) return { error: "That book could not be found." };
+
+  const [returned] = await sql<{ title: string }[]>`
+    update loans set returned_on = current_date
+    where book_id = ${bookId} and returned_on is null
+    returning (select title from books where books.id = loans.book_id) as title
+  `;
+  if (!returned) return { error: "This book is not currently on loan." };
+
+  revalidatePath("/");
+  return { success: `“${returned.title}” has been returned.` };
+}

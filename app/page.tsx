@@ -4,6 +4,7 @@ import { getBooks, type BookRecord } from "@/db";
 import { SideNav } from "./components/side-nav";
 import { AddBookForm } from "./components/add-book-form";
 import { BookControls } from "./components/book-controls";
+import { LoanControls, ReturnBookButton } from "./components/loan-controls";
 
 function BookRows({ books }: { books: BookRecord[] }) {
   if (books.length === 0) {
@@ -26,7 +27,7 @@ function BookRows({ books }: { books: BookRecord[] }) {
               <><span className="status-pill available"><CircleCheck size={13} /> Available</span><p>On the shelf</p></>
             )}
           </div>
-          <div className="book-row-end"><div className="book-number">{String(index + 1).padStart(2, "0")}</div><BookControls book={book} /></div>
+          <div className="book-row-end"><div className="book-number">{String(index + 1).padStart(2, "0")}</div><BookControls book={book} />{book.member_name ? <ReturnBookButton bookId={book.id} title={book.title} /> : null}</div>
         </article>
       ))}
     </div>
@@ -53,6 +54,12 @@ async function BooksContent() {
   );
 }
 
+async function LendingContent() {
+  const { getLoanOptions } = await import("@/db");
+  const options = await getLoanOptions();
+  return <LoanControls options={options} />;
+}
+
 function BooksFallback() {
   return <div className="loading-list" role="status">Opening the catalogue…</div>;
 }
@@ -69,6 +76,7 @@ export default function Home() {
             <div className="intro-art" aria-hidden="true"><div className="art-book art-book-one"><span>THE<br />READING<br />ROOM</span></div><div className="art-book art-book-two"><span>OPEN<br />A BOOK</span></div><div className="art-book art-book-three"><span>STORIES<br />LIVE HERE</span></div><div className="art-sun" /><div className="art-caption">EST. FOR<br />THE CURIOUS</div></div>
           </section>
           <Suspense fallback={<BooksFallback />}><BooksContent /></Suspense>
+          <Suspense fallback={<BooksFallback />}><LendingContent /></Suspense>
           <section className="add-section" aria-labelledby="add-book-heading">
             <div className="section-heading"><div><span className="eyebrow">GROW THE SHELVES</span><h2 id="add-book-heading">Add a book</h2></div></div>
             <AddBookForm />
