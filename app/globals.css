@@ -42,6 +42,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .book-details { min-width: 0; }.book-details h2 { overflow: hidden; margin: 0 0 5px; font-size: 14px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }.book-details p, .book-status p { margin: 0; color: var(--muted); font-size: 11px; }.book-year { color: #99a19a; }
 .book-status { justify-self: start; }.status-pill { display: inline-flex; min-height: 23px; align-items: center; gap: 5px; margin-bottom: 4px; border-radius: 3px; padding: 2px 7px; font-size: 10px; font-weight: 650; }.available { background: #e7f2e8; color: #2f704a; }.on-loan { background: #f9eee7; color: #a55b3d; }.book-number { color: #a7afa8; font-size: 10px; text-align: right; }
 .empty-state, .loading-list { display: grid; min-height: 150px; place-content: center; justify-items: center; gap: 10px; color: var(--muted); }.empty-state p { margin: 0; }
+.add-section { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 23px; }
+.add-book-form { display: grid; max-width: 700px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; gap: 9px 14px; }
+.field-label { color: #67736b; font-size: 11px; font-weight: 650; }
+.add-book-form input { width: 100%; min-height: 40px; grid-row: auto; border: 1px solid #dce3da; border-radius: 3px; outline: none; background: #fff; padding: 0 11px; color: var(--ink); font-size: 12px; }
+.add-book-form input:focus { border-color: #578672; box-shadow: 0 0 0 2px #57867220; }
+.primary-button { display: inline-flex; min-height: 40px; grid-column: 1 / -1; align-items: center; justify-content: center; gap: 8px; justify-self: start; border: 0; border-radius: 3px; background: var(--green); padding: 0 15px; color: #fff; cursor: pointer; font-size: 12px; font-weight: 650; }
+.primary-button:hover { background: var(--green-deep); }.primary-button:disabled { cursor: wait; opacity: .65; }
+.form-message { grid-column: 1 / -1; margin: 2px 0; font-size: 12px; }.error-message { color: #a53d2f; }.success-message { color: #286943; }
 @media (max-width: 760px) {
   .side-nav { position: sticky; inset: 0 0 auto; width: auto; height: 62px; flex-direction: row; align-items: center; justify-content: space-between; border-right: 0; border-bottom: 1px solid var(--line); padding: 0 18px; }
   .brand { gap: 8px; font-size: 17px; }.brand-mark { width: 31px; height: 31px; }.nav-caption, .nav-footnote { display: none; }.nav-links { display: flex; gap: 3px; }.nav-link { min-height: 38px; gap: 7px; padding: 0 9px; font-size: 12px; }
@@ -49,6 +57,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .intro-band { min-height: 205px; padding: 24px; }.intro-copy h2 { font-size: 29px; }.intro-copy p { max-width: 210px; font-size: 12px; line-height: 1.5; }.intro-art { position: absolute; right: -47px; bottom: -12px; transform: scale(.72); transform-origin: bottom right; opacity: .9; }
   .stat-strip { margin: 20px 0 28px; }.stat-item { min-width: 0; flex: 1; padding-right: 12px; }.stat-item + .stat-item { padding-left: 13px; }.stat-number { font-size: 23px; }.stat-label { font-size: 10px; }.section-heading h2 { font-size: 20px; }
   .book-row { grid-template-columns: 42px minmax(0, 1fr) 24px; gap: 11px; min-height: 82px; }.book-cover { width: 40px; height: 56px; }.book-status { grid-column: 2; grid-row: 2; margin-top: -13px; }.book-number { grid-column: 3; grid-row: 1 / span 2; }.book-details { align-self: end; padding-bottom: 15px; }.book-status p { display: inline; margin-left: 4px; font-size: 10px; }.status-pill { min-height: 19px; margin-bottom: 0; padding: 1px 5px; font-size: 9px; }
+  .add-book-form { grid-template-columns: 1fr; gap: 8px; }.add-book-form input { margin-bottom: 6px; }.primary-button { grid-column: 1; }.form-message { grid-column: 1; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .intro-band { animation: arrive 420ms ease-out both; }.book-row { animation: arrive 360ms ease-out both; }.book-row:nth-child(2) { animation-delay: 35ms; }.book-row:nth-child(3) { animation-delay: 70ms; }

@@ -48,3 +48,11 @@ export async function getBooks() {
     order by books.title asc
   `;
 }
+
+export async function getMembers() {
+  return sql<{ id: number; name: string; phone: string | null }[]>`
+    select id, name, phone
+    from members
+    order by name asc
+  `;
+}
