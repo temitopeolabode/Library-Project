@@ -92,3 +92,16 @@ export async function deleteBook(_previousState: { error?: string; success?: str
   revalidatePath("/");
   return { success: `“${book.title}” was removed.` };
 }
+
+export async function addMember(_previousState: { error?: string; success?: string }, formData: FormData) {
+  const name = readText(formData, "name");
+  const phone = readText(formData, "phone");
+
+  if (!name) return { error: "Please enter a member name." };
+  if (name.length > 160) return { error: "A member name must be 160 characters or fewer." };
+  if (phone.length > 40) return { error: "A phone number must be 40 characters or fewer." };
+
+  await sql`insert into members (name, phone) values (${name}, ${phone || null})`;
+  revalidatePath("/members");
+  return { success: `${name} was added as a member.` };
+}
