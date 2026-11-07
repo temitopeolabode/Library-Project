@@ -106,6 +106,29 @@ export async function addMember(_previousState: { error?: string; success?: stri
   return { success: `${name} was added as a member.` };
 }
 
+export async function deleteMember(_previousState: { error?: string; success?: string }, formData: FormData): Promise<{ error?: string; success?: string }> {
+  const id = Number(readText(formData, "id"));
+  if (!Number.isInteger(id) || id < 1) return { error: "That member could not be found." };
+
+  const result = await sql.begin(async (transaction) => {
+    const [member] = await transaction<{ id: number; name: string }[]>`
+      select id, name from members where id = ${id} for update
+    `;
+    if (!member) return { error: "That member could not be found." };
+
+    const [loan] = await transaction<{ id: number }[]>`
+      select id from loans where member_id = ${id} limit 1
+    `;
+    if (loan) return { error: `${member.name} has loan history and cannot be removed.` };
+
+    await transaction`delete from members where id = ${id}`;
+    return { success: `${member.name} was removed from the members list.` };
+  });
+
+  if (result.success) revalidatePath("/members");
+  return result;
+}
+
 export async function lendBook(_previousState: { error?: string; success?: string }, formData: FormData) {
   const bookId = Number(readText(formData, "book_id"));
   const memberId = Number(readText(formData, "member_id"));

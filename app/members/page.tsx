@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { UsersRound } from "lucide-react";
 import { getMembers } from "@/db";
 import { AddMemberForm } from "../components/add-member-form";
+import { MemberControls } from "../components/member-controls";
 import { SideNav } from "../components/side-nav";
 
 async function MembersContent() {
@@ -16,6 +17,7 @@ async function MembersContent() {
             <div className={`member-avatar avatar-${index % 5}`}>{member.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase()}</div>
             <div className="member-details"><h3>{member.name}</h3><p>{member.phone || "No phone number"}</p></div>
             <span className="member-index">{String(index + 1).padStart(2, "0")}</span>
+            <MemberControls id={member.id} name={member.name} />
           </article>
         )) : <div className="empty-state"><UsersRound size={26} strokeWidth={1.5} /><p>No members registered yet.</p></div>}
       </div>
