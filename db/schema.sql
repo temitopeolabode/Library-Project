@@ -6,6 +6,7 @@ create table authors (
 create table books (
   id serial primary key,
   title text not null,
+  summary text not null,
   year integer,
   author_id integer not null references authors (id)
 );

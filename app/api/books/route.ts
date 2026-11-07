@@ -6,6 +6,7 @@ export async function GET() {
     return Response.json(books.map((book) => ({
       id: book.id,
       title: book.title,
+      summary: book.summary,
       year: book.year,
       author: book.author,
       available: book.member_name === null,

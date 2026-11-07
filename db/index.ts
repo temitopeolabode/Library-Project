@@ -26,6 +26,7 @@ if (process.env.NODE_ENV !== "production") {
 export type BookRecord = {
   id: number;
   title: string;
+  summary: string;
   year: number | null;
   author: string;
   member_name: string | null;
@@ -37,6 +38,7 @@ export async function getBooks() {
     select
       books.id,
       books.title,
+      books.summary,
       books.year,
       authors.name as author,
       members.name as member_name,
@@ -47,6 +49,26 @@ export async function getBooks() {
     left join members on members.id = loans.member_id
     order by books.title asc
   `;
+}
+
+export async function getBook(id: number) {
+  const [book] = await sql<(BookRecord & { author_id: number })[]>`
+    select
+      books.id,
+      books.title,
+      books.summary,
+      books.year,
+      authors.id as author_id,
+      authors.name as author,
+      members.name as member_name,
+      to_char(loans.due_on, 'FMMonth FMDD, YYYY') as due_on
+    from books
+    join authors on authors.id = books.author_id
+    left join loans on loans.book_id = books.id and loans.returned_on is null
+    left join members on members.id = loans.member_id
+    where books.id = ${id}
+  `;
+  return book ?? null;
 }
 
 export async function getMembers() {
@@ -84,6 +106,7 @@ export async function getBooksByAuthor(authorId: number) {
     select
       books.id,
       books.title,
+      books.summary,
       books.year,
       authors.name as author,
       members.name as member_name,
