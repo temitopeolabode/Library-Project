@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BookOpen, LibraryBig, UsersRound } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 
 export function SideNav({ current }: { current: "books" | "members" | "authors" }) {
   return (
@@ -27,6 +28,7 @@ export function SideNav({ current }: { current: "books" | "members" | "authors" 
         <span className="live-dot" />
         <span>Community collection</span>
       </div>
+      <ThemeToggle />
     </aside>
   );
 }

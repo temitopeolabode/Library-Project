@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root { --ink: #1c2b2a; --muted: #78827d; --paper: #fbfcf8; --line: #e4e9e1; --green: #245c4b; --green-deep: #173c34; --lime: #d7ed9f; --coral: #e4755e; }
+:root[data-theme="dark"] { color-scheme: dark; --ink: #edf2eb; --muted: #a5b0a7; --paper: #171d1a; --line: #35413a; --green: #3e8168; --green-deep: #d2e8ce; --lime: #d7ed9f; --coral: #e4755e; }
 @theme inline { --color-background: var(--paper); --color-foreground: var(--ink); --font-sans: var(--font-geist-sans); --font-mono: var(--font-geist-mono); }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
@@ -17,6 +18,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-link { display: flex; min-height: 43px; align-items: center; gap: 12px; padding: 0 11px; border-radius: 5px; color: #66716b; font-weight: 600; }
 .nav-link:hover, .nav-link.active { background: #e6efe4; color: var(--green-deep); }
 .nav-footnote { display: flex; align-items: center; gap: 9px; margin-top: auto; padding: 14px 8px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+.theme-toggle { display: flex; min-height: 38px; align-items: center; gap: 10px; margin-top: 8px; border: 1px solid var(--line); border-radius: 4px; background: transparent; padding: 0 10px; color: var(--muted); cursor: pointer; font-size: 11px; text-align: left; }.theme-toggle:hover { border-color: #749482; background: #eaf0e7; color: var(--green-deep); }
 .live-dot { display: inline-block; width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #57a47b; }
 .main-panel { min-height: 100vh; margin-left: 238px; }
 .page-header { display: flex; min-height: 97px; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding: 20px clamp(24px, 5vw, 72px); }
@@ -111,4 +113,48 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (prefers-reduced-motion: no-preference) {
   .intro-band { animation: arrive 420ms ease-out both; }.book-row { animation: arrive 360ms ease-out both; }.book-row:nth-child(2) { animation-delay: 35ms; }.book-row:nth-child(3) { animation-delay: 70ms; }
   @keyframes arrive { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+}
+
+:root[data-theme="dark"] body { background: var(--paper); color: var(--ink); }
+:root[data-theme="dark"] .side-nav { border-color: var(--line); background: #202824; }
+:root[data-theme="dark"] .brand-mark { background: #3e8168; }
+:root[data-theme="dark"] .nav-caption, :root[data-theme="dark"] .breadcrumb { color: #a0aca3; }
+:root[data-theme="dark"] .nav-link { color: #b7c1b9; }
+:root[data-theme="dark"] .nav-link:hover, :root[data-theme="dark"] .nav-link.active, :root[data-theme="dark"] .theme-toggle:hover { background: #2b3b32; color: #e0efdc; }
+:root[data-theme="dark"] .page-header, :root[data-theme="dark"] .stat-strip, :root[data-theme="dark"] .book-list, :root[data-theme="dark"] .member-list, :root[data-theme="dark"] .author-list { border-color: var(--line); }
+:root[data-theme="dark"] .header-note, :root[data-theme="dark"] .intro-copy p, :root[data-theme="dark"] .book-details p, :root[data-theme="dark"] .book-status p, :root[data-theme="dark"] .member-details p, :root[data-theme="dark"] .book-detail-status p { color: #aeb9b0; }
+:root[data-theme="dark"] .intro-band { background: #29372e; }
+:root[data-theme="dark"] .members-intro { background: #29372e; }
+:root[data-theme="dark"] .authors-intro { background: #37312b; }
+:root[data-theme="dark"] .intro-copy h2, :root[data-theme="dark"] .section-heading h2, :root[data-theme="dark"] .page-header h1, :root[data-theme="dark"] .book-details h2, :root[data-theme="dark"] .member-details h3 { color: var(--ink); }
+:root[data-theme="dark"] .stat-item + .stat-item { border-color: var(--line); }
+:root[data-theme="dark"] .catalog-search, :root[data-theme="dark"] .add-book-form input, :root[data-theme="dark"] .add-member-form input, :root[data-theme="dark"] .add-book-summary textarea, :root[data-theme="dark"] .loan-form select, :root[data-theme="dark"] .edit-book-form input:not([type="hidden"]) { border-color: #46534b; background: #202824; color: var(--ink); }
+:root[data-theme="dark"] .catalog-search input, :root[data-theme="dark"] .loan-form select { color: var(--ink); }
+:root[data-theme="dark"] .catalog-search input::placeholder, :root[data-theme="dark"] .add-book-form input::placeholder, :root[data-theme="dark"] .add-member-form input::placeholder, :root[data-theme="dark"] .add-book-summary textarea::placeholder { color: #89968d; }
+:root[data-theme="dark"] .book-row { border-color: #35413a; background: #202824; }
+:root[data-theme="dark"] .book-row:hover { border-color: #597362; box-shadow: 0 7px 18px #00000028; }
+:root[data-theme="dark"] .book-number, :root[data-theme="dark"] .collection-count, :root[data-theme="dark"] .search-result-note { color: #9aa69d; }
+:root[data-theme="dark"] .icon-button { color: #b4c0b7; }
+:root[data-theme="dark"] .icon-button:hover { border-color: #49584e; background: #2b3b32; color: #e0efdc; }
+:root[data-theme="dark"] .author-row { border-color: var(--line); }
+:root[data-theme="dark"] .author-row:hover { background: #222c26; }
+:root[data-theme="dark"] .author-name { color: var(--ink); }
+:root[data-theme="dark"] .author-count, :root[data-theme="dark"] .author-profile p { color: #b0bbb2; }
+:root[data-theme="dark"] .author-profile { border-color: var(--line); }
+:root[data-theme="dark"] .book-detail-status, :root[data-theme="dark"] .add-section, :root[data-theme="dark"] .loan-section { border-color: var(--line); }
+:root[data-theme="dark"] .book-summary { border-color: #567664; }
+:root[data-theme="dark"] .book-summary p { color: #b6c1b9; }
+:root[data-theme="dark"] .book-detail-cover { box-shadow: inset 12px 0 0 #00000025, 8px 10px 0 #343d37, 0 16px 30px #00000030; }
+:root[data-theme="dark"] .loan-duration-options { border-color: #46534b; background: #202824; }
+:root[data-theme="dark"] .duration-option { color: #bdc8bf; }
+:root[data-theme="dark"] .duration-option.selected { border-color: #526357; background: #35423a; color: #edf2eb; }
+:root[data-theme="dark"] .return-button { border-color: #46534b; background: #202824; color: #c0ccc3; }
+:root[data-theme="dark"] .return-button:hover { background: #2b3b32; color: #d8edda; }
+:root[data-theme="dark"] .back-link { color: #c0ccc3; }
+:root[data-theme="dark"] .book-detail-byline a { color: #bdd9bf; }
+:root[data-theme="dark"] .empty-state, :root[data-theme="dark"] .loading-list { color: #aeb9b0; }
+
+@media (max-width: 760px) {
+  .theme-toggle { justify-content: center; width: 38px; min-height: 38px; margin: 0; padding: 0; }
+  .theme-toggle span { display: none; }
 }
