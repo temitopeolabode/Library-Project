@@ -13,9 +13,9 @@ async function BooksContent() {
   return (
     <>
       <div className="stat-strip" aria-label="Collection summary">
-        <div className="stat-item"><span className="stat-number">{books.length}</span><span className="stat-label">Total books</span></div>
-        <div className="stat-item"><span className="stat-number">{availableCount}</span><span className="stat-label">On the shelf</span></div>
-        <div className="stat-item"><span className="stat-number">{outCount}</span><span className="stat-label">On loan</span></div>
+        <div className="stat-item"><span className="stat-label">IN THE COLLECTION</span><span className="stat-number">{books.length}<span className="stat-unit"> titles</span></span></div>
+        <div className="stat-item"><span className="stat-label">READY TO BORROW</span><span className="stat-number">{availableCount}<span className="stat-unit"> available</span></span></div>
+        <div className="stat-item"><span className="stat-label">WITH READERS</span><span className="stat-number">{outCount}<span className="stat-unit"> on loan</span></span></div>
       </div>
       <section className="collection-section" aria-labelledby="collection-heading">
         <div className="section-heading"><div><span className="eyebrow">THE COLLECTION</span><h2 id="collection-heading">Every story, accounted for.</h2></div><span className="collection-count">{books.length} TITLES</span></div>
