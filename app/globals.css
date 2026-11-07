@@ -83,6 +83,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .field-label { color: #67736b; font-size: 11px; font-weight: 650; }
 .add-book-form input, .add-member-form input { width: 100%; min-height: 40px; grid-row: auto; border: 1px solid #dce3da; border-radius: 3px; outline: none; background: #fff; padding: 0 11px; color: var(--ink); font-size: 12px; }
 .add-book-form input:focus, .add-member-form input:focus { border-color: #578672; box-shadow: 0 0 0 2px #57867220; }
+.add-book-summary { grid-column: 1 / -1; }.add-book-summary textarea { width: 100%; min-height: 76px; resize: vertical; border: 1px solid #dce3da; border-radius: 3px; outline: none; background: #fff; padding: 10px 11px; color: var(--ink); font: inherit; font-size: 12px; line-height: 1.5; }.add-book-summary textarea:focus { border-color: #578672; box-shadow: 0 0 0 2px #57867220; }.add-book-summary .field-label span { color: #99a19a; font-weight: 400; }
 .primary-button { display: inline-flex; min-height: 40px; grid-column: 1 / -1; align-items: center; justify-content: center; gap: 8px; justify-self: start; border: 0; border-radius: 3px; background: var(--green); padding: 0 15px; color: #fff; cursor: pointer; font-size: 12px; font-weight: 650; }
 .primary-button:hover { background: var(--green-deep); }.primary-button:disabled { cursor: wait; opacity: .65; }
 .form-message { grid-column: 1 / -1; margin: 2px 0; font-size: 12px; }.error-message { color: #a53d2f; }.success-message { color: #286943; }

@@ -11,11 +11,14 @@ function readText(formData: FormData, key: string) {
 export async function addBook(_previousState: { error?: string; success?: string }, formData: FormData) {
   const title = readText(formData, "title");
   const author = readText(formData, "author");
+  const submittedSummary = readText(formData, "summary");
   const yearText = readText(formData, "year");
   const year = Number(yearText);
+  const summary = submittedSummary || "A story from the community library collection.";
 
   if (!title) return { error: "Please enter a book title." };
   if (!author) return { error: "Please enter an author." };
+  if (summary.length > 1200) return { error: "A summary must be 1,200 characters or fewer." };
   if (!/^\d{1,4}$/.test(yearText) || year < 1 || year > new Date().getFullYear()) {
     return { error: "Enter a valid publication year." };
   }
@@ -31,8 +34,8 @@ export async function addBook(_previousState: { error?: string; success?: string
         `;
 
     await transaction`
-      insert into books (title, year, author_id)
-      values (${title}, ${year}, ${savedAuthor.id})
+      insert into books (title, summary, year, author_id)
+      values (${title}, ${summary}, ${year}, ${savedAuthor.id})
     `;
   });
 

@@ -17,6 +17,10 @@ export function AddBookForm() {
       <input id="book-author" name="author" placeholder="e.g. Ben Okri" required maxLength={160} />
       <label className="field-label" htmlFor="book-year">Year</label>
       <input id="book-year" name="year" type="number" min="1" max="9999" placeholder="1991" required />
+      <div className="form-field add-book-summary">
+        <label className="field-label" htmlFor="book-summary">Summary <span>(optional)</span></label>
+        <textarea id="book-summary" name="summary" placeholder="What might a reader enjoy about this book?" maxLength={1200} rows={3} />
+      </div>
       {state.error ? <p className="form-message error-message" role="alert">{state.error}</p> : null}
       {state.success ? <p className="form-message success-message" role="status">{state.success}</p> : null}
       <button className="primary-button" type="submit" disabled={pending}><Plus size={16} />{pending ? "Adding…" : "Add book"}</button>
