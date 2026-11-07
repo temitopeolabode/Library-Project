@@ -57,6 +57,46 @@ export async function getMembers() {
   `;
 }
 
+export async function getAuthors() {
+  return sql<{ id: number; name: string; book_count: number; loan_count: number }[]>`
+    select
+      authors.id,
+      authors.name,
+      count(distinct books.id)::int as book_count,
+      count(distinct loans.id) filter (where loans.returned_on is null)::int as loan_count
+    from authors
+    left join books on books.author_id = authors.id
+    left join loans on loans.book_id = books.id
+    group by authors.id
+    order by authors.name asc
+  `;
+}
+
+export async function getAuthor(id: number) {
+  const [author] = await sql<{ id: number; name: string }[]>`
+    select id, name from authors where id = ${id}
+  `;
+  return author ?? null;
+}
+
+export async function getBooksByAuthor(authorId: number) {
+  return sql<BookRecord[]>`
+    select
+      books.id,
+      books.title,
+      books.year,
+      authors.name as author,
+      members.name as member_name,
+      to_char(loans.due_on, 'FMMonth FMDD, YYYY') as due_on
+    from books
+    join authors on authors.id = books.author_id
+    left join loans on loans.book_id = books.id and loans.returned_on is null
+    left join members on members.id = loans.member_id
+    where authors.id = ${authorId}
+    order by books.title asc
+  `;
+}
+
 export async function getLoanOptions() {
   const [books, members] = await Promise.all([
     sql<{ id: number; title: string; author: string }[]>`
