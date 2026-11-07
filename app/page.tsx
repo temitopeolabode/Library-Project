@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { getBooks } from "@/db";
 import { SideNav } from "./components/side-nav";
 import { AddBookForm } from "./components/add-book-form";
-import { BookList } from "./components/book-list";
+import { CatalogSearch } from "./components/catalog-search";
 import { LoanControls } from "./components/loan-controls";
 
 async function BooksContent() {
@@ -19,7 +19,7 @@ async function BooksContent() {
       </div>
       <section className="collection-section" aria-labelledby="collection-heading">
         <div className="section-heading"><div><span className="eyebrow">THE COLLECTION</span><h2 id="collection-heading">Every story, accounted for.</h2></div><span className="collection-count">{books.length} TITLES</span></div>
-        <BookList books={books} />
+        <CatalogSearch books={books} />
       </section>
     </>
   );

@@ -132,8 +132,10 @@ export async function deleteMember(_previousState: { error?: string; success?: s
 export async function lendBook(_previousState: { error?: string; success?: string }, formData: FormData) {
   const bookId = Number(readText(formData, "book_id"));
   const memberId = Number(readText(formData, "member_id"));
+  const days = Number(readText(formData, "days"));
   if (!Number.isInteger(bookId) || bookId < 1) return { error: "Choose an available book." };
   if (!Number.isInteger(memberId) || memberId < 1) return { error: "Choose a member." };
+  if (![7, 14, 21, 30].includes(days)) return { error: "Choose a loan length of 7, 14, 21, or 30 days." };
 
   try {
     const [book] = await sql.begin(async (transaction) => {
@@ -154,12 +156,12 @@ export async function lendBook(_previousState: { error?: string; success?: strin
 
       await transaction`
         insert into loans (book_id, member_id, borrowed_on, due_on)
-        values (${bookId}, ${memberId}, current_date, current_date + 14)
+        values (${bookId}, ${memberId}, current_date, current_date + ${days}::int)
       `;
       return [availableBook];
     });
     revalidatePath("/");
-    return { success: `“${book.title}” is now on loan.` };
+    return { success: `“${book.title}” is now on loan for ${days} days.` };
   } catch (error) {
     return { error: error instanceof Error ? error.message : "Unable to lend this book." };
   }
