@@ -17,7 +17,7 @@ async function BookPageContent({ params }: { params: Promise<{ id: string }> }) 
     <div className="page-content book-detail-content">
       <Link className="back-link" href="/"><ArrowLeft size={15} /> All books</Link>
       <article className="book-detail-layout">
-        <div className="book-detail-cover" aria-label={`Book cover for ${book.title} by ${book.author}`}>
+        <div className={`book-detail-cover cover-${book.id % 5}`} aria-label={`Book cover for ${book.title} by ${book.author}`}>
           <div className="cover-rule" aria-hidden="true" />
           <span className="cover-title">{book.title}</span>
           <Link className="cover-author" href={`/authors/${book.author_id}`}>{book.author}</Link>
