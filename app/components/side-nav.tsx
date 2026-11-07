@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BookOpen, LibraryBig, UsersRound } from "lucide-react";
 
 export function SideNav({ current }: { current: "books" | "members" | "authors" }) {
   return (
     <aside className="side-nav">
       <Link className="brand" href="/" aria-label="Biblotheca home">
-        <span className="brand-mark"><BookOpen size={19} strokeWidth={1.8} /></span>
+        <Image className="brand-mark" src="/biblotheca-mark.svg" alt="" width={42} height={42} priority />
         <span>Biblotheca</span>
       </Link>
       <p className="nav-caption">YOUR LIBRARY</p>
