@@ -13,7 +13,7 @@ export function BookList({ books, controls = true }: { books: BookRecord[]; cont
     <div className="book-list">
       {books.map((book, index) => (
         <article className="book-row" key={book.id}>
-          <Link className={`book-cover cover-${index % 5}`} href={`/books/${book.id}`} aria-label={`View ${book.title}`} title={`View ${book.title}`}><span>{book.title.slice(0, 1)}</span><i /></Link>
+          <Link className={`book-cover cover-${book.id % 5}`} href={`/books/${book.id}`} aria-label={`View ${book.title}`} title={`View ${book.title}`}><span>{book.title.slice(0, 1)}</span><i /></Link>
           <div className="book-details">
             <h2><Link className="book-title-link" href={`/books/${book.id}`}>{book.title}</Link></h2>
             <p>{book.author}{book.year ? <span className="book-year"> · {book.year}</span> : null}</p>
